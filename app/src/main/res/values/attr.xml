@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="imageback" format="color|reference"/>
+    <attr name="linearback" format="color|reference"/>
+    <attr name="edittextlook" format="reference"/>
+    <attr name="textcolornav" format="color|reference"/>
+</resources>

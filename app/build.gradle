@@ -1,0 +1,29 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 20
+    buildToolsVersion '20.0.0'
+
+    defaultConfig {
+        applicationId "com.tod.android.xkcdreader"
+        minSdkVersion 14
+        targetSdkVersion 20
+        versionCode 7
+        versionName "1.8.4"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    // You must install or update the Support Repository through the SDK manager to use this dependency.
+    compile 'com.android.support:support-v4:+'
+    compile 'org.jsoup:jsoup:+'
+    compile 'com.squareup.picasso:picasso:+'
+    compile files('libs/GoogleAnalyticsServicesAndroid_3.02/libGoogleAnalyticsServices.jar')
+}

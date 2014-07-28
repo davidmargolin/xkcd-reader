@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Theme">
+    <ListPreference
+        android:title="Theme"
+        android:summary="@string/theme_summary"
+        android:key="themepref"
+        android:entryValues="@array/themevalues"
+        android:entries="@array/themes"
+        android:defaultValue="LIGHT"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Notifications">
+        <CheckBoxPreference
+            android:title="Enable Notifications"
+            android:key="notifs"
+            android:summary="Reminders for when new xkcd comics are released. (Mondays, Wednesdays, and Thursdays)"
+            android:defaultValue="true" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="About">
+        <Preference
+            android:title="About"
+            android:key="about"
+            />
+    </PreferenceCategory>
+</PreferenceScreen>

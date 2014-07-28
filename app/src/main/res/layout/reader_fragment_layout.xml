@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/editTexthold"
+            android:layout_toStartOf="@+id/editTexthold"
+            android:background="?attr/linearback"
+            android:id="@+id/linearLayout4"
+            style="?android:buttonBarStyle"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/progressBar">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/firstbutton"
+                android:text="@string/first"
+                android:textColor="@color/White"
+                android:textSize="22sp"
+                android:background="@drawable/nav_selector"
+                android:layout_gravity="left|center_vertical"
+                android:gravity="center_vertical|center_horizontal"
+                android:textStyle="bold"
+                style="?android:buttonBarButtonStyle"
+                android:paddingTop="16dp"
+                android:layout_weight="1"
+                android:paddingBottom="16dp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/previousbutton"
+                android:layout_weight="1"
+                style="?android:buttonBarButtonStyle"
+                android:text="@string/previous"
+                android:textColor="@color/White"
+                android:textSize="22sp"
+                android:background="@drawable/nav_selector"
+                android:gravity="center_vertical|center_horizontal"
+                android:textStyle="bold"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:background="?attr/linearback"
+            style="?android:buttonBarStyle"
+            android:id="@+id/linearLayout3"
+            android:layout_toEndOf="@+id/editTexthold"
+            android:layout_toRightOf="@+id/editTexthold">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/nextbutton"
+                android:text="@string/next"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:layout_weight="1"
+                android:textColor="@color/White"
+                android:background="@drawable/nav_selector"
+                android:layout_gravity="right|center_vertical"
+                android:gravity="center_vertical|center_horizontal"
+                android:paddingTop="16dp"
+                style="?android:buttonBarButtonStyle"
+                android:paddingBottom="16dp" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:id="@+id/lastbutton"
+                android:text="@string/last"
+                android:textSize="22sp"
+                android:layout_weight="1"
+                android:textColor="@color/White"
+                style="?android:buttonBarButtonStyle"
+                android:background="@drawable/nav_selector"
+                android:layout_gravity="left|center_vertical"
+                android:gravity="center_vertical|center_horizontal"
+                android:textStyle="bold"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp" />
+        </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="?attr/linearback"
+        android:id="@+id/editTexthold"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_alignTop="@+id/linearLayout3">
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="4"
+            android:background="?attr/edittextlook"
+            android:maxLength="4"
+            android:id="@+id/editText"
+            android:gravity="center_vertical|center_horizontal"
+            android:textAlignment="center"
+            android:singleLine="true"
+            android:textStyle="bold"
+            android:textColor="@color/White"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_gravity="center"
+ />
+</LinearLayout>
+    <com.tod.android.xkcdreader.TouchImageView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/imageView2"
+        android:layout_gravity="center"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="false"
+        android:background="?attr/imageback"
+        android:layout_above="@+id/linearLayout4"
+        android:layout_below="@+id/linearLayout5" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/editTexthold" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="false"
+        android:id="@+id/linearLayout5">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            android:gravity="center_horizontal"
+            android:textSize="18sp"
+            android:background="@color/DimGray"
+            android:textColor="@color/White"
+            android:padding="4dp"
+            android:phoneNumber="false" />
+    </LinearLayout>
+
+
+</RelativeLayout>

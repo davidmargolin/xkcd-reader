@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity" >
+    <item android:id="@+id/random"
+        android:title="Random Comic"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_action_shuffle"/>
+    <item android:id="@+id/explain"
+        android:title="Explain"
+        android:icon="@drawable/ic_action_help"
+        android:showAsAction="ifRoom" />
+    <item android:id="@+id/list"
+        android:title="Display As List"
+        android:showAsAction="never" />
+    <item android:id="@+id/website"
+        android:title="Open In Browser"
+        android:icon="@drawable/ic_action_web_site_light"
+        android:showAsAction="never" />
+    <item android:id="@+id/refresh"
+        android:title="Refresh"
+        android:icon="@drawable/ic_action_refresh"
+        android:showAsAction="never" />
+    <item android:id="@+id/share"
+        android:title="Share"
+        android:icon="@drawable/ic_action_share"
+        android:showAsAction="ifRoom" />
+
+</menu>
