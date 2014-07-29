@@ -5,7 +5,7 @@ Description: A simple xkcd reader for android.
   <img src="http://s13.postimg.org/to0p12ltj/graphic2.png"/>
 
 ## Download
-<a href="https://play.google.com/store/apps/details?id=com.tod.xkcdreader" alt="logo" title="Download from Google Play">
+<a href="https://play.google.com/store/apps/details?id=com.tod.android.xkcdreader" alt="logo" title="Download from Google Play">
   <img src="http://developer.android.com/images/brand/en_app_rgb_wo_60.png">
 </a>
 
