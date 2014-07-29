@@ -1,12 +1,10 @@
 package com.tod.android.xkcdreader;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -26,14 +24,14 @@ import java.util.ArrayList;
  * Created by Margolin on 7/21/2014.
  */
 public class BlagTitlesLoader extends Fragment{
-    ListView loadlist;
-    Document whatifdoc;
-    Async task;
-    Elements articles;
-    String url;
-    ProgressBar progress;
-    ArrayList<String> d = new ArrayList<String>();
-    ArrayList<String> e = new ArrayList<String>();
+    private ListView loadlist;
+    private Document whatifdoc;
+    private Async task;
+    private Elements articles;
+    private String url;
+    private ProgressBar progress;
+    private ArrayList<String> d = new ArrayList<String>();
+    private ArrayList<String> e = new ArrayList<String>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

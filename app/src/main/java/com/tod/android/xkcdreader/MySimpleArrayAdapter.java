@@ -2,8 +2,6 @@ package com.tod.android.xkcdreader;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,20 +9,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
-
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 /**
  * Created by Margolin on 12/23/13.
  */
-    public class MySimpleArrayAdapter extends ArrayAdapter<String> {
+public class MySimpleArrayAdapter extends ArrayAdapter<String> {
         private final Context context;
         private final ArrayList titles;
     private final ArrayList links;

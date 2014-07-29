@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -12,11 +13,9 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -24,7 +23,7 @@ import java.util.Calendar;
  * Created by Margolin on 7/9/2014.
  */
 public class SettingsFragment extends PreferenceFragment {
-    SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -70,9 +69,10 @@ public class SettingsFragment extends PreferenceFragment {
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                 PendingIntent pendingIntent1 = PendingIntent.getBroadcast(getActivity(), 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
                 PendingIntent pendingIntent2 = PendingIntent.getBroadcast(getActivity(), 0, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
-                AlarmManager alrm = (AlarmManager)getActivity().getSystemService(getActivity().ALARM_SERVICE);
-                AlarmManager alrm1 = (AlarmManager)getActivity().getSystemService(getActivity().ALARM_SERVICE);
-                AlarmManager alrm2 = (AlarmManager)getActivity().getSystemService(getActivity().ALARM_SERVICE);
+                AlarmManager alrm = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
+                AlarmManager alrm1 = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
+                AlarmManager alrm2 = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
 
                 if (checked) {
                     pm.setComponentEnabledSetting(receiver,
@@ -105,9 +105,7 @@ public class SettingsFragment extends PreferenceFragment {
                     alrm.setRepeating(AlarmManager.RTC_WAKEUP, moncalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent);
                     alrm1.setRepeating(AlarmManager.RTC_WAKEUP, wedcalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent1);
                     alrm2.setRepeating(AlarmManager.RTC_WAKEUP, fricalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent2);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("notifs", true);
-                    editor.commit();
                 }else{
                     pm.setComponentEnabledSetting(receiver,
                             PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
@@ -121,10 +119,9 @@ public class SettingsFragment extends PreferenceFragment {
                     pendingIntent1.cancel();
                     pendingIntent2.cancel();
                     alrm2.cancel(pendingIntent);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("notifs", false);
-                    editor.commit();
                 }
+                editor.apply();
                 return true;
             }
         });

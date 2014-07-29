@@ -29,8 +29,8 @@ import java.util.Calendar;
 public class NavActivity extends Activity
     implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     private static long back_pressed;
-    FragmentManager fragmentManager;
-    static Boolean hidemenu;
+    private FragmentManager fragmentManager;
+    private static Boolean hidemenu;
         /**
          * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
          */
@@ -105,7 +105,7 @@ public class NavActivity extends Activity
                     .commit();
         }
 
-    public void onSectionAttached(int number) {
+    void onSectionAttached(int number) {
         switch (number) {
             case 1:
                 mTitle = getString(R.string.title_section1);
@@ -238,7 +238,7 @@ public class NavActivity extends Activity
     public static void setlistfrag(Boolean enabled){
         hidemenu = enabled;
     }
-    public void restoreActionBar() {
+    void restoreActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);

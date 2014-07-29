@@ -48,32 +48,32 @@ import java.net.URL;
  * Created by Margolin on 7/2/2014.
  */
 public class ReaderFragment extends Fragment {
-    String imagelink;
-    String hypertext;
-    String comictitle;
-    Document subdepdoc;
-    Button previousbutton;
-    Button lastbutton;
-    Button firstbutton;
-    Boolean safetoshare = false;
-    EditText selfselect;
-    Button nextbutton;
-    String website;
-    ProgressBar progress;
-    TextView titletext;
-    Integer num = null;
-    Integer maxnum;
-    ColorDrawable back;
-    Boolean lastattempt = true;
-    Integer nextnum = 0;
-    Integer prevnum = 0;
-    Boolean failed = false;
-    int color;
-    Element comiclink;
-    Element hyperlink;
-    Async task;
-    TouchImageView comic;
-String link;
+    private String imagelink;
+    private String hypertext;
+    private String comictitle;
+    private Document subdepdoc;
+    private Button previousbutton;
+    private Button lastbutton;
+    private Button firstbutton;
+    private Boolean safetoshare = false;
+    private EditText selfselect;
+    private Button nextbutton;
+    private String website;
+    private ProgressBar progress;
+    private TextView titletext;
+    private Integer num = null;
+    private Integer maxnum;
+    private ColorDrawable back;
+    private Boolean lastattempt = true;
+    private Integer nextnum = 0;
+    private Integer prevnum = 0;
+    private Boolean failed = false;
+    private int color;
+    private Element comiclink;
+    private Element hyperlink;
+    private Async task;
+    private TouchImageView comic;
+private String link;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

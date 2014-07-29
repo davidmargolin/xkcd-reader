@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -23,18 +22,18 @@ import java.util.Collections;
  * Created by Margolin on 7/21/2014.
  */
 public class WhatIfLoaderFragment extends Fragment {
-    ListView loadlist;
-    Document whatifdoc;
-    Async task;
-    Elements titles;
-    ProgressBar progress;
-    Elements imagelinks;
-    Elements articlelinks;
-    Elements articledates;
-    ArrayList<String> d = new ArrayList<String>();
-    ArrayList<String> e = new ArrayList<String>();
-    ArrayList<String> f = new ArrayList<String>();
-    ArrayList<String> g = new ArrayList<String>();
+    private ListView loadlist;
+    private Document whatifdoc;
+    private Async task;
+    private Elements titles;
+    private ProgressBar progress;
+    private Elements imagelinks;
+    private Elements articlelinks;
+    private Elements articledates;
+    private final ArrayList<String> d = new ArrayList<String>();
+    private final ArrayList<String> e = new ArrayList<String>();
+    private final ArrayList<String> f = new ArrayList<String>();
+    private final ArrayList<String> g = new ArrayList<String>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -3,18 +3,15 @@ package com.tod.android.xkcdreader;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,20 +20,19 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Created by Margolin on 7/21/2014.
  */
 public class BlagLoaderFragment extends Fragment {
-    ListView loadlist;
-    Document whatifdoc;
-    Async task;
-    Elements months;
+    private ListView loadlist;
+    private Document whatifdoc;
+    private Async task;
+    private Elements months;
     Elements links;
-    ProgressBar progress;
-    ArrayList<String> d = new ArrayList<String>();
-    ArrayList<String> e = new ArrayList<String>();
+    private ProgressBar progress;
+    private ArrayList<String> d = new ArrayList<String>();
+    private ArrayList<String> e = new ArrayList<String>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
