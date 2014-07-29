@@ -18,7 +18,7 @@ public class Receiver extends BroadcastReceiver {
     }
 
     public void showNotification(Context context) {
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, NavActivity.class);
         PendingIntent pi = PendingIntent.getActivity(context, 7339684, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.hat)
