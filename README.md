@@ -9,7 +9,7 @@ Description: A simple xkcd reader for android.
   <img src="http://developer.android.com/images/brand/en_app_rgb_wo_60.png">
 </a>
 
-## Updates
+## Changelog
 #####V1.8.1 - V1.8.4
 - Minor bugfixes involving comic browser and handling browser intents
 
@@ -32,7 +32,7 @@ Description: A simple xkcd reader for android.
 
 ## Acknowledgements
 
-Special thanks to 16trohrt and other contributors.
+Special thanks to all contributors.
 
 ## License
 
