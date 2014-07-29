@@ -1,4 +1,4 @@
-# xkcd Reader
+# <img src="https://lh6.ggpht.com/wbtigaxy7NsJHENSK9K55TkIEbEUuNky2GB_VqoUfH9w9ajLnszVwOAadKCyx_Q3Vg"/>     xkcd Reader
 
 Description: A simple xkcd reader for android.
 
