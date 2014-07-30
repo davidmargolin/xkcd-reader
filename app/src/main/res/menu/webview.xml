@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/readability"
+        android:title="Readability"
+        android:showAsAction="never"/>
+    <item android:id="@+id/action_back"
+        android:icon="@drawable/ic_action_back"
+        android:title="Back"
+        android:showAsAction="always"/>
+    <item android:id="@+id/action_forward"
+        android:icon="@drawable/ic_action_forward"
+        android:title="Forward"
+        android:showAsAction="always"/>
+    <item android:id="@+id/action_reload"
+        android:icon="@drawable/ic_action_refresh"
+        android:title="Refresh"
+        android:showAsAction="never"/>
+    <item android:id="@+id/browser"
+        android:icon="@drawable/ic_action_web_site_light"
+        android:title="Open in Browser"
+        android:showAsAction="never"/>
+</menu>
