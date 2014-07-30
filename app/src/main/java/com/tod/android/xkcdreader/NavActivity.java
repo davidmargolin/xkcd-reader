@@ -35,7 +35,7 @@ public class NavActivity extends Activity
          * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
          */
         private NavigationDrawerFragment mNavigationDrawerFragment;
-/**
+        /**
          * Used to store the last screen title. For use in {@link #restoreActionBar()}.
          */
         private static CharSequence mTitle;
