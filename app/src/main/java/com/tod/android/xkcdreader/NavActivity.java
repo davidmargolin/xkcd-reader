@@ -228,7 +228,9 @@ public class NavActivity extends Activity
                 getMenuInflater().inflate(R.menu.main,menu);
             }
             if (hidemenu){
-                menu.clear();
+                if (menu.hasVisibleItems()) {
+                    menu.clear();
+                }
             }
             restoreActionBar();
             return true;
@@ -240,10 +242,15 @@ public class NavActivity extends Activity
     }
     void restoreActionBar() {
         ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        if (!(mTitle== "xkcd")){
-        actionBar.setTitle(mTitle);}
+       try {
+           actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+           actionBar.setDisplayShowTitleEnabled(true);
+           if (!(mTitle== "xkcd")){
+               actionBar.setTitle(mTitle);}
+       }catch (NullPointerException e){
+           e.printStackTrace();
+       }
+
     }
     /**
      * Called whenever we call invalidateOptionsMenu()

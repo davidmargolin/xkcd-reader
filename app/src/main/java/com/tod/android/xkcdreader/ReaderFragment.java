@@ -89,9 +89,7 @@ private String link;
             website=bundle.getString("LINK");
             Integer testmaxnum = bundle.getInt("listmaxnum");
             if (testmaxnum != 0){
-                if (testmaxnum != null) {
                     maxnum = testmaxnum;
-                }
             }
             if (website == "http://xkcd.com"){
                 lastattempt = true;
@@ -443,7 +441,6 @@ private String link;
             // Creating a fragment transaction
             FragmentTransaction ft = fragmentManager.beginTransaction();
             if (maxnum > 0) {
-                if (maxnum != null) {
                     Bundle data = new Bundle();
 
                     // Setting the index of the currently selected item of mDrawerList
@@ -451,7 +448,6 @@ private String link;
                     data.putInt("maxnum", maxnum);
                     // Setting the position to the fragment
                     hFragment.setArguments(data);
-                }
             }
             // Adding a fragment to the fragment transaction
             ft.replace(R.id.container, hFragment);
