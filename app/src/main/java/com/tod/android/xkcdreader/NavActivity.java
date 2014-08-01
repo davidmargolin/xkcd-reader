@@ -9,10 +9,13 @@ import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -30,14 +33,12 @@ public class NavActivity extends Activity
     implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     private static long back_pressed;
     private FragmentManager fragmentManager;
+    public static final String BROADCAST = "com.tod.android.xkcdreader.android.action.broadcast";
     private static Boolean hidemenu;
         /**
          * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
          */
         private NavigationDrawerFragment mNavigationDrawerFragment;
-        /**
-         * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-         */
         private static CharSequence mTitle;
 
         @Override
@@ -61,40 +62,47 @@ public class NavActivity extends Activity
                     R.id.navigation_drawer,
                     (DrawerLayout) findViewById(R.id.drawer_layout));
             if (notifs) {
-                Intent intent = new Intent(this, Receiver.class);
-                Intent intent1 = new Intent(this, Receiver.class);
-                Intent intent2 = new Intent(this, Receiver.class);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 7339684, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                PendingIntent pendingIntent1 = PendingIntent.getBroadcast(this, 7339684, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
-                PendingIntent pendingIntent2 = PendingIntent.getBroadcast(this, 7339684, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
-                AlarmManager alrm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                AlarmManager alrm1 = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                AlarmManager alrm2 = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                Calendar moncalendar = Calendar.getInstance();
-                moncalendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-                moncalendar.set(Calendar.HOUR_OF_DAY, 1);
-                moncalendar.set(Calendar.MINUTE, 1);
-                Calendar wedcalendar = Calendar.getInstance();
-                wedcalendar.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
-                wedcalendar.set(Calendar.HOUR_OF_DAY, 1);
-                wedcalendar.set(Calendar.MINUTE, 1);
-                Calendar fricalendar = Calendar.getInstance();
-                fricalendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
-                fricalendar.set(Calendar.HOUR_OF_DAY, 1);
-                fricalendar.set(Calendar.MINUTE, 1);
-                if (moncalendar.getTimeInMillis() < (System.currentTimeMillis())) {
-                    moncalendar.add(Calendar.DATE, 7);
+                boolean alarmUp = (PendingIntent.getBroadcast(this, 0,
+                        new Intent(BROADCAST),
+                        PendingIntent.FLAG_NO_CREATE) != null);
+
+                if (alarmUp){
+                    Log.d("Alarm Info", "Alarm is already active");
+                }else {
+                    IntentFilter intentFilter = new IntentFilter(BROADCAST);
+                    Receiver myreceiver = new Receiver();
+                    registerReceiver(myreceiver , intentFilter);
+                    Intent intent = new Intent(BROADCAST);
+                    PendingIntent operation = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    AlarmManager alrm = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+                    AlarmManager alrm1 = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+                    AlarmManager alrm2 = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+                    Calendar today = Calendar.getInstance();
+                    today.set(Calendar.HOUR_OF_DAY,24);
+                    Calendar moncalendar = Calendar.getInstance();
+                    moncalendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+                    Calendar wedcalendar = Calendar.getInstance();
+                    wedcalendar.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
+                    Calendar fricalendar = Calendar.getInstance();
+                    fricalendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
+                    if (moncalendar.getTimeInMillis() < today.getTimeInMillis()) {
+                        moncalendar.add(Calendar.DATE, 7);
+                        Log.d("timemon","added 7 days");
+                    }
+                    if (wedcalendar.getTimeInMillis() < today.getTimeInMillis()) {
+                        wedcalendar.add(Calendar.DATE, 7);
+                        Log.d("timewed","added 7 days");
+                    }
+                    if (fricalendar.getTimeInMillis() < today.getTimeInMillis()) {
+                        fricalendar.add(Calendar.DATE, 7);
+                        Log.d("timefri","added 7 days");
+                    }
+                    alrm.setRepeating(AlarmManager.RTC_WAKEUP, moncalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, operation);
+                    alrm1.setRepeating(AlarmManager.RTC_WAKEUP, wedcalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, operation);
+                    alrm2.setRepeating(AlarmManager.RTC_WAKEUP, fricalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, operation);
+                    Log.d("alarm status","started");
                 }
-                if (wedcalendar.getTimeInMillis() < (System.currentTimeMillis())) {
-                    wedcalendar.add(Calendar.DATE, 7);
                 }
-                if (fricalendar.getTimeInMillis() < (System.currentTimeMillis())) {
-                    fricalendar.add(Calendar.DATE, 7);
-                }
-                alrm.setRepeating(AlarmManager.RTC_WAKEUP, moncalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent);
-                alrm1.setRepeating(AlarmManager.RTC_WAKEUP, wedcalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent1);
-                alrm2.setRepeating(AlarmManager.RTC_WAKEUP, fricalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent2);
-            }
             }
         @Override
         public void onNavigationDrawerItemSelected(int position) {
@@ -232,7 +240,6 @@ public class NavActivity extends Activity
                     menu.clear();
                 }
             }
-            restoreActionBar();
             return true;
         }
         return super.onCreateOptionsMenu(menu);
@@ -240,21 +247,6 @@ public class NavActivity extends Activity
     public static void setlistfrag(Boolean enabled){
         hidemenu = enabled;
     }
-    void restoreActionBar() {
-        ActionBar actionBar = getActionBar();
-       try {
-           actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-           actionBar.setDisplayShowTitleEnabled(true);
-           if (!(mTitle== "xkcd")){
-               actionBar.setTitle(mTitle);}
-       }catch (NullPointerException e){
-           e.printStackTrace();
-       }
-
-    }
-    /**
-     * Called whenever we call invalidateOptionsMenu()
-     */
 
     /**
      * A placeholder fragment containing a simple view.

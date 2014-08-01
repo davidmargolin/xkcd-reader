@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +26,10 @@ import java.util.Calendar;
  */
 public class SettingsFragment extends PreferenceFragment {
     private SharedPreferences sharedPreferences;
+    boolean alarmUp;
+    public static final String BROADCAST = "com.tod.android.xkcdreader.android.action.broadcast";
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
-
         super.onCreate(savedInstanceState);
 
         // Load the preferences from an XML resource
@@ -63,63 +65,72 @@ public class SettingsFragment extends PreferenceFragment {
                 ComponentName receiver = new ComponentName(getActivity(), BootReceiver.class);
                 ComponentName notifreceiver = new ComponentName(getActivity(), Receiver.class);
                 PackageManager pm = getActivity().getPackageManager();
-                Intent intent = new Intent(getActivity(), Receiver.class);
-                Intent intent1 = new Intent(getActivity(), Receiver.class);
-                Intent intent2 = new Intent(getActivity(), Receiver.class);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                PendingIntent pendingIntent1 = PendingIntent.getBroadcast(getActivity(), 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
-                PendingIntent pendingIntent2 = PendingIntent.getBroadcast(getActivity(), 0, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
-                AlarmManager alrm = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
-                AlarmManager alrm1 = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
-                AlarmManager alrm2 = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
+                AlarmManager alrm = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+                AlarmManager alrm1 = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+                AlarmManager alrm2 = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
+
+
                 if (checked) {
-                    pm.setComponentEnabledSetting(receiver,
-                            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                            PackageManager.DONT_KILL_APP);
-                    pm.setComponentEnabledSetting(notifreceiver,
-                            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                            PackageManager.DONT_KILL_APP);
-                    Calendar moncalendar = Calendar.getInstance();
-                    moncalendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-                    moncalendar.set(Calendar.HOUR_OF_DAY, 1);
-                    moncalendar.set(Calendar.MINUTE, 1);
-                    Calendar wedcalendar = Calendar.getInstance();
-                    wedcalendar.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
-                    wedcalendar.set(Calendar.HOUR_OF_DAY, 1);
-                    wedcalendar.set(Calendar.MINUTE, 1);
-                    Calendar fricalendar = Calendar.getInstance();
-                    fricalendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
-                    fricalendar.set(Calendar.HOUR_OF_DAY, 1);
-                    fricalendar.set(Calendar.MINUTE, 1);
-                    if (moncalendar.getTimeInMillis() < (System.currentTimeMillis())) {
-                        moncalendar.add(Calendar.DATE, 7);
+                    alarmUp = (PendingIntent.getBroadcast(getActivity(), 0,
+                            new Intent(BROADCAST),
+                            PendingIntent.FLAG_NO_CREATE) != null);
+                    if (!alarmUp) {
+                        IntentFilter intentFilter = new IntentFilter(BROADCAST);
+                        Receiver myreceiver = new Receiver();
+                        getActivity().registerReceiver(myreceiver, intentFilter);
+                        Intent intent = new Intent(BROADCAST);
+                        PendingIntent operation = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
+                        Calendar today = Calendar.getInstance();
+                        today.set(Calendar.HOUR_OF_DAY,24);
+                        Calendar moncalendar = Calendar.getInstance();
+                        moncalendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+                        Calendar wedcalendar = Calendar.getInstance();
+                        wedcalendar.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
+                        Calendar fricalendar = Calendar.getInstance();
+                        fricalendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
+                        if (moncalendar.getTimeInMillis() < today.getTimeInMillis()) {
+                            moncalendar.add(Calendar.DATE, 7);
+                            Log.d("timemon","added 7 days");
+                        }
+                        if (wedcalendar.getTimeInMillis() < today.getTimeInMillis()) {
+                            wedcalendar.add(Calendar.DATE, 7);
+                            Log.d("timewed","added 7 days");
+                        }
+                        if (fricalendar.getTimeInMillis() < today.getTimeInMillis()) {
+                            fricalendar.add(Calendar.DATE, 7);
+                            Log.d("timefri","added 7 days");
+                        }
+                        alrm.setRepeating(AlarmManager.RTC_WAKEUP, moncalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, operation);
+                        alrm1.setRepeating(AlarmManager.RTC_WAKEUP, wedcalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, operation);
+                        alrm2.setRepeating(AlarmManager.RTC_WAKEUP, fricalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, operation);
+                        Log.d("alarm status","started");
                     }
-                    if (wedcalendar.getTimeInMillis() < (System.currentTimeMillis())) {
-                        wedcalendar.add(Calendar.DATE, 7);
-                    }
-                    if (fricalendar.getTimeInMillis() < (System.currentTimeMillis())) {
-                        fricalendar.add(Calendar.DATE, 7);
-                    }
-                    alrm.setRepeating(AlarmManager.RTC_WAKEUP, moncalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent);
-                    alrm1.setRepeating(AlarmManager.RTC_WAKEUP, wedcalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent1);
-                    alrm2.setRepeating(AlarmManager.RTC_WAKEUP, fricalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent2);
                     editor.putBoolean("notifs", true);
+                    pm.setComponentEnabledSetting(receiver,
+                            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                            PackageManager.DONT_KILL_APP);
+                    pm.setComponentEnabledSetting(notifreceiver,
+                            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                            PackageManager.DONT_KILL_APP);
                 }else{
+                    alarmUp = (PendingIntent.getBroadcast(getActivity(), 0,
+                            new Intent(BROADCAST),
+                            PendingIntent.FLAG_NO_CREATE) != null);
+                    if (alarmUp){
+                        PendingIntent.getBroadcast(getActivity(), 0,
+                                new Intent(BROADCAST),PendingIntent.FLAG_NO_CREATE).cancel();
+                        Log.d("alarm status","stopped");
+                    }
                     pm.setComponentEnabledSetting(receiver,
                             PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                             PackageManager.DONT_KILL_APP);
                     pm.setComponentEnabledSetting(notifreceiver,
                             PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                             PackageManager.DONT_KILL_APP);
-                    alrm1.cancel(pendingIntent);
-                    alrm.cancel(pendingIntent);
-                    pendingIntent.cancel();
-                    pendingIntent1.cancel();
-                    pendingIntent2.cancel();
-                    alrm2.cancel(pendingIntent);
                     editor.putBoolean("notifs", false);
+
                 }
                 editor.apply();
                 return true;

@@ -5,6 +5,8 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.util.Log;
 
 import java.util.Calendar;
 
@@ -12,43 +14,47 @@ import java.util.Calendar;
  * Created by Margolin on 7/15/2014.
  */
 public class BootReceiver extends BroadcastReceiver {
+    public static final String BROADCAST = "com.tod.android.xkcdreader.android.action.broadcast";
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
-            Intent rebootintent = new Intent(context, Receiver.class);
-            Intent rebootintent1 = new Intent(context, Receiver.class);
-            Intent rebootintent2 = new Intent(context, Receiver.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 7339684, rebootintent, PendingIntent.FLAG_UPDATE_CURRENT);
-            PendingIntent pendingIntent1 = PendingIntent.getBroadcast(context, 7339684, rebootintent1, PendingIntent.FLAG_UPDATE_CURRENT);
-            PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, 7339684, rebootintent2, PendingIntent.FLAG_UPDATE_CURRENT);
-            AlarmManager alrm = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-            AlarmManager alrm1 = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-            AlarmManager alrm2 = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-            Calendar moncalendar = Calendar.getInstance();
-            moncalendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-            moncalendar.set(Calendar.HOUR_OF_DAY, 1);
-            moncalendar.set(Calendar.MINUTE, 1);
-            Calendar wedcalendar = Calendar.getInstance();
-            wedcalendar.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
-            wedcalendar.set(Calendar.HOUR_OF_DAY, 1);
-            wedcalendar.set(Calendar.MINUTE, 1);
-            Calendar fricalendar = Calendar.getInstance();
-            fricalendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
-            fricalendar.set(Calendar.HOUR_OF_DAY, 1);
-            fricalendar.set(Calendar.MINUTE, 1);
-            if (moncalendar.getTimeInMillis() < (System.currentTimeMillis())) {
-                moncalendar.add(Calendar.DATE, 7);
+            boolean alarmUp = (PendingIntent.getBroadcast(context, 0,
+                    new Intent(BROADCAST),
+                    PendingIntent.FLAG_NO_CREATE) != null);
+            if (!alarmUp) {
+                IntentFilter intentFilter = new IntentFilter(BROADCAST);
+                Receiver myreceiver = new Receiver();
+                context.registerReceiver(myreceiver , intentFilter);
+                Intent bintent = new Intent(BROADCAST);
+                PendingIntent operation = PendingIntent.getBroadcast(context, 0, bintent, 0);
+                AlarmManager alrm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                AlarmManager alrm1 = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                AlarmManager alrm2 = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                Calendar today = Calendar.getInstance();
+                today.set(Calendar.HOUR_OF_DAY,24);
+                Calendar moncalendar = Calendar.getInstance();
+                moncalendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+                Calendar wedcalendar = Calendar.getInstance();
+                wedcalendar.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
+                Calendar fricalendar = Calendar.getInstance();
+                fricalendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
+                if (moncalendar.getTimeInMillis() < today.getTimeInMillis()) {
+                    moncalendar.add(Calendar.DATE, 7);
+                    Log.d("timemon", "added 7 days");
+                }
+                if (wedcalendar.getTimeInMillis() < today.getTimeInMillis()) {
+                    wedcalendar.add(Calendar.DATE, 7);
+                    Log.d("timewed","added 7 days");
+                }
+                if (fricalendar.getTimeInMillis() < today.getTimeInMillis()) {
+                    fricalendar.add(Calendar.DATE, 7);
+                    Log.d("timefri","added 7 days");
+                }
+                alrm.setRepeating(AlarmManager.RTC_WAKEUP, moncalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, operation);
+                alrm1.setRepeating(AlarmManager.RTC_WAKEUP, wedcalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, operation);
+                alrm2.setRepeating(AlarmManager.RTC_WAKEUP, fricalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, operation);
+                Log.d("alarm status", "started");
             }
-            if (wedcalendar.getTimeInMillis() < (System.currentTimeMillis())) {
-                wedcalendar.add(Calendar.DATE, 7);
-            }
-            if (fricalendar.getTimeInMillis() < (System.currentTimeMillis())) {
-                fricalendar.add(Calendar.DATE, 7);
-            }
-            alrm.setRepeating(AlarmManager.RTC_WAKEUP, moncalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent);
-            alrm1.setRepeating(AlarmManager.RTC_WAKEUP, wedcalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent1);
-            alrm2.setRepeating(AlarmManager.RTC_WAKEUP, fricalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent2);
-
         }
     }
 }

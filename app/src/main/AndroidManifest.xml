@@ -15,9 +15,11 @@
         android:icon="@drawable/hat"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <receiver android:name=".Receiver"
-            android:process=":remote"
-            />
+        <receiver android:name=".Receiver">
+        <intent-filter >
+            <action android:name="com.tod.android.xkcdreader.android.action.broadcast"/>
+        </intent-filter>
+        </receiver>
         <receiver android:name=".BootReceiver"
             android:enabled="true">
             <intent-filter>
