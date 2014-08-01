@@ -97,11 +97,11 @@ public class BlagLoaderFragment extends Fragment {
                     FragmentManager fragmentManager = getFragmentManager();
                     // Creating a fragment transaction
                     FragmentTransaction ft = fragmentManager.beginTransaction();
-                    ft.addToBackStack("blag");
+
                     // Adding a fragment to the fragment transaction
                     ft.replace(R.id.container, dFragment);
                     ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-
+                    ft.addToBackStack("blag");
 
                     // Committing the transaction
                     ft.commit();
