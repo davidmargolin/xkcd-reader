@@ -38,7 +38,7 @@ public class SettingsFragment extends PreferenceFragment {
         getActivity().invalidateOptionsMenu();
         CheckBoxPreference notifications = (CheckBoxPreference) findPreference("notifs");
         Preference prefereces=findPreference("about");
-        Preference themeswitcheroo=findPreference("themepref");
+        final Preference themeswitcheroo=findPreference("themepref");
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         themeswitcheroo.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -71,42 +71,62 @@ public class SettingsFragment extends PreferenceFragment {
                 AlarmManager alrm1 = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
                 AlarmManager alrm2 = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
+                alarmUp = (PendingIntent.getBroadcast(getActivity(), 0,
+                        new Intent(BROADCAST),
+                        PendingIntent.FLAG_NO_CREATE) != null);
+                Intent intent = new Intent(BROADCAST);
+                PendingIntent operation = PendingIntent.getBroadcast(getActivity(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent operation1 = PendingIntent.getBroadcast(getActivity(), 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent operation2 = PendingIntent.getBroadcast(getActivity(), 2, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
 
                 if (checked) {
-                    alarmUp = (PendingIntent.getBroadcast(getActivity(), 0,
-                            new Intent(BROADCAST),
-                            PendingIntent.FLAG_NO_CREATE) != null);
+
+
                     if (!alarmUp) {
-                        IntentFilter intentFilter = new IntentFilter(BROADCAST);
-                        Receiver myreceiver = new Receiver();
-                        getActivity().registerReceiver(myreceiver, intentFilter);
-                        Intent intent = new Intent(BROADCAST);
-                        PendingIntent operation = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
                         Calendar today = Calendar.getInstance();
                         today.set(Calendar.HOUR_OF_DAY,24);
                         Calendar moncalendar = Calendar.getInstance();
-                        moncalendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+                        moncalendar.add(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+                        moncalendar.set(Calendar.HOUR_OF_DAY, 12);
+                        moncalendar.set(Calendar.MINUTE, 0);
+                        moncalendar.set(Calendar.SECOND,0);
+                        moncalendar.set(Calendar.MILLISECOND,0);
+                        long firstTime = moncalendar.getTimeInMillis();
+                        Log.e("", "Monday firstTime: " + firstTime);
                         Calendar wedcalendar = Calendar.getInstance();
-                        wedcalendar.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
+                        wedcalendar.add(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
+                        wedcalendar.set(Calendar.HOUR_OF_DAY, 12);
+                        wedcalendar.set(Calendar.MINUTE, 0);
+                        wedcalendar.set(Calendar.SECOND,0);
+                        wedcalendar.set(Calendar.MILLISECOND,0);
+                        long firstTimewed = wedcalendar.getTimeInMillis();
+                        Log.e("", "Wednesday firstTime: " + firstTimewed);
                         Calendar fricalendar = Calendar.getInstance();
-                        fricalendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
-                        if (moncalendar.getTimeInMillis() < today.getTimeInMillis()) {
+                        fricalendar.add(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
+                        fricalendar.set(Calendar.HOUR_OF_DAY, 12);
+                        fricalendar.set(Calendar.MINUTE, 0);
+                        fricalendar.set(Calendar.SECOND,0);
+                        fricalendar.set(Calendar.MILLISECOND,0);
+                        long firstTimefri = fricalendar.getTimeInMillis();
+                        Log.e("", "Friday firstTime: " + firstTimefri);
+                        if (moncalendar.before(today)) {
                             moncalendar.add(Calendar.DATE, 7);
                             Log.d("timemon","added 7 days");
                         }
-                        if (wedcalendar.getTimeInMillis() < today.getTimeInMillis()) {
+                        if (wedcalendar.before(today)) {
                             wedcalendar.add(Calendar.DATE, 7);
                             Log.d("timewed","added 7 days");
+
                         }
-                        if (fricalendar.getTimeInMillis() < today.getTimeInMillis()) {
+                        if (fricalendar.before(today)) {
                             fricalendar.add(Calendar.DATE, 7);
                             Log.d("timefri","added 7 days");
                         }
                         alrm.setRepeating(AlarmManager.RTC_WAKEUP, moncalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, operation);
-                        alrm1.setRepeating(AlarmManager.RTC_WAKEUP, wedcalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, operation);
-                        alrm2.setRepeating(AlarmManager.RTC_WAKEUP, fricalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, operation);
+                        alrm1.setRepeating(AlarmManager.RTC_WAKEUP, wedcalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, operation1);
+                        alrm2.setRepeating(AlarmManager.RTC_WAKEUP, fricalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, operation2);
                         Log.d("alarm status","started");
                     }
                     editor.putBoolean("notifs", true);
@@ -117,13 +137,17 @@ public class SettingsFragment extends PreferenceFragment {
                             PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                             PackageManager.DONT_KILL_APP);
                 }else{
-                    alarmUp = (PendingIntent.getBroadcast(getActivity(), 0,
-                            new Intent(BROADCAST),
-                            PendingIntent.FLAG_NO_CREATE) != null);
                     if (alarmUp){
                         PendingIntent.getBroadcast(getActivity(), 0,
                                 new Intent(BROADCAST),PendingIntent.FLAG_NO_CREATE).cancel();
-                        Log.d("alarm status","stopped");
+                        PendingIntent.getBroadcast(getActivity(), 1,
+                                new Intent(BROADCAST),PendingIntent.FLAG_NO_CREATE).cancel();
+                        PendingIntent.getBroadcast(getActivity(), 2,
+                                new Intent(BROADCAST),PendingIntent.FLAG_NO_CREATE).cancel();
+                        alrm.cancel(operation);
+                        alrm1.cancel(operation1);
+                        alrm2.cancel(operation2);
+                        Log.d("alarm status", "stopped");
                     }
                     pm.setComponentEnabledSetting(receiver,
                             PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
