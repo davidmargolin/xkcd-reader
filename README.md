@@ -10,6 +10,15 @@ Description: A simple xkcd reader for android.
 </a>
 
 ## Changelog
+#####V2.0
+- Notifications Fixed
+- Fragment Overlays Fixed
+- New Readability Option In Webviews
+- Crash On Theme Change Fixed
+- Unnecessary Activities Removed
+- Menu Fixes
+- Now Completely Stable
+
 #####V1.8.1 - V1.8.4
 - Minor bugfixes involving comic browser and handling browser intents
 
