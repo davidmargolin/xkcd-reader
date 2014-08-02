@@ -126,7 +126,9 @@ public class NavActivity extends Activity
                 // Setting the position to the fragment
                 aFragment.setArguments(data);
                 // Creating a fragment transaction
-
+                if (fragmentManager.getBackStackEntryCount() > 0) {
+                    fragmentManager.popBackStack();
+                }
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 // Adding a fragment to the fragment transaction
                 ft.replace(R.id.container, aFragment);
@@ -148,6 +150,9 @@ public class NavActivity extends Activity
 					// Setting the position to the fragment
 					rFragment.setArguments(data);*/
                 // Creating a fragment transaction
+                if (fragmentManager.getBackStackEntryCount() > 0) {
+                    fragmentManager.popBackStack();
+                }
                 ft = fragmentManager.beginTransaction();
                 // Getting reference to the FragmentManager
                 // Adding a fragment to the fragment transaction
@@ -170,6 +175,9 @@ public class NavActivity extends Activity
 					data.putInt("position", posit
 					// Setting the position to the fragment
 					rFragment.setArguments(data);*/
+                if (fragmentManager.getBackStackEntryCount() > 0) {
+                    fragmentManager.popBackStack();
+                }
                 // Creating a fragment transaction
                 ft = fragmentManager.beginTransaction();
                 // Getting reference to the FragmentManager
@@ -195,6 +203,9 @@ public class NavActivity extends Activity
 					rFragment.setArguments(data);*/
 
                 // Getting reference to the FragmentManager
+                if (fragmentManager.getBackStackEntryCount() > 0) {
+                    fragmentManager.popBackStack();
+                }
                 // Creating a fragment transaction
                 ft = fragmentManager.beginTransaction();
                 // Adding a fragment to the fragment transaction

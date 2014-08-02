@@ -453,9 +453,10 @@ private String link;
             ft.replace(R.id.container, hFragment);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.addToBackStack("reader");
-
             // Committing the transaction
             ft.commit();
+
+
         }
 
 

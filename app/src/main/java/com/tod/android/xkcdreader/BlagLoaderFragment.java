@@ -101,8 +101,8 @@ public class BlagLoaderFragment extends Fragment {
                     // Adding a fragment to the fragment transaction
                     ft.replace(R.id.container, dFragment);
                     ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                    ft.addToBackStack("blag");
 
+                    ft.addToBackStack("blag");
                     // Committing the transaction
                     ft.commit();
 
