@@ -440,7 +440,7 @@ private String link;
             FragmentManager fragmentManager = getFragmentManager();
             // Creating a fragment transaction
             FragmentTransaction ft = fragmentManager.beginTransaction();
-            if (maxnum > 0) {
+            if (maxnum != null) {
                     Bundle data = new Bundle();
 
                     // Setting the index of the currently selected item of mDrawerList

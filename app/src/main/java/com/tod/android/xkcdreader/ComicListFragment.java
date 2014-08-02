@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,11 @@ public class ComicListFragment extends Fragment {
         progress = (ProgressBar)v.findViewById(R.id.progressBar);
         NavActivity.setlistfrag(true);
         Bundle bundle = getArguments();
-        maxnum=bundle.getInt("maxnum");
+        try {
+            maxnum = bundle.getInt("maxnum");
+        }catch (Exception e){
+            Log.d("maxnum error","no maxnum registered");
+        }
         getActivity().invalidateOptionsMenu();
         task = new Async();
         task.execute();
@@ -94,7 +99,8 @@ public class ComicListFragment extends Fragment {
                     // Setting the index of the currently selected item of mDrawerList
                     data.putString("LINK", e.get(position));
                     data.putString("TITLE", d.get(position));
-                    data.putInt("listmaxnum", maxnum);
+                    if (maxnum != null){
+                    data.putInt("listmaxnum", maxnum);}
                     // Setting the position to the fragment
                     iFragment.setArguments(data);
 

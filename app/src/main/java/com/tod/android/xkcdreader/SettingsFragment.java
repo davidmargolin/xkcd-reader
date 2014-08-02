@@ -9,12 +9,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,9 +27,11 @@ import java.util.Calendar;
  * Created by Margolin on 7/9/2014.
  */
 public class SettingsFragment extends PreferenceFragment {
-    private SharedPreferences sharedPreferences;
-    boolean alarmUp;
+    int color;
     public static final String BROADCAST = "com.tod.android.xkcdreader.android.action.broadcast";
+    boolean alarmUp;
+    private SharedPreferences sharedPreferences;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,7 +125,7 @@ public class SettingsFragment extends PreferenceFragment {
                     if (alarmUp){
                         PendingIntent.getBroadcast(getActivity(), 0,
                                 new Intent(BROADCAST),PendingIntent.FLAG_NO_CREATE).cancel();
-                        Log.d("alarm status","stopped");
+                        Log.d("alarm status", "stopped");
                     }
                     pm.setComponentEnabledSetting(receiver,
                             PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
@@ -142,8 +146,6 @@ public class SettingsFragment extends PreferenceFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-
-
         return view;
     }
 

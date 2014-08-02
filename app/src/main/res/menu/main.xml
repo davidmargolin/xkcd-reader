@@ -3,12 +3,12 @@
     tools:context=".MainActivity" >
     <item android:id="@+id/random"
         android:title="@string/randombutton"
-        android:showAsAction="ifRoom"
+        android:showAsAction="always"
         android:icon="@drawable/ic_action_shuffle"/>
     <item android:id="@+id/explain"
         android:title="@string/explainbutton"
         android:icon="@drawable/ic_action_help"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="always" />
     <item android:id="@+id/list"
         android:title="@string/listbutton"
         android:showAsAction="never" />
