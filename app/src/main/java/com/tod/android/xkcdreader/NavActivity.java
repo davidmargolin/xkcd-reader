@@ -30,7 +30,7 @@ import java.util.Calendar;
  */
 public class NavActivity extends Activity
     implements NavigationDrawerFragment.NavigationDrawerCallbacks {
-    static long back_pressed;
+     static long back_pressed;
     FragmentManager fragmentManager;
     static final String BROADCAST = "com.tod.android.xkcdreader.android.action.broadcast";
     static Boolean hidemenu;
@@ -99,7 +99,7 @@ public class NavActivity extends Activity
                     alrm.setRepeating(AlarmManager.RTC_WAKEUP, moncalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, operation);
                     alrm1.setRepeating(AlarmManager.RTC_WAKEUP, wedcalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, operation);
                     alrm2.setRepeating(AlarmManager.RTC_WAKEUP, fricalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, operation);
-                    Log.d("alarm status", "started");
+                    Log.d("alarm status","started");
                 }
                 }
             }
@@ -112,7 +112,6 @@ public class NavActivity extends Activity
                     // Creating a fragment object
                     ReaderFragment aFragment = new ReaderFragment();
                     Bundle data = new Bundle();
-
                     // Setting the index of the currently selected item of mDrawerList
                     data.putString("LINK", "http://xkcd.com");
                     // Setting the position to the fragment
@@ -134,13 +133,6 @@ public class NavActivity extends Activity
                 case 1:
                     mTitle = getString(R.string.title_section2);
                     BlagLoaderFragment bFragment = new BlagLoaderFragment();
-/*					// Creating a Bundle object
-					Bundle data = new Bundle();
-
-					// Setting the index of the currently selected item of mDrawerList
-					data.putInt("position", posit
-					// Setting the position to the fragment
-					rFragment.setArguments(data);*/
                     // Creating a fragment transaction
                     if (fragmentManager.getBackStackEntryCount() > 0) {
                         fragmentManager.popBackStack();
@@ -160,20 +152,12 @@ public class NavActivity extends Activity
                 case 2:
                     mTitle = getString(R.string.title_section3);
                     WhatIfLoaderFragment cFragment = new WhatIfLoaderFragment();
-/*					// Creating a Bundle object
-					Bundle data = new Bundle();
-
-					// Setting the index of the currently selected item of mDrawerList
-					data.putInt("position", posit
-					// Setting the position to the fragment
-					rFragment.setArguments(data);*/
                     if (fragmentManager.getBackStackEntryCount() > 0) {
                         fragmentManager.popBackStack();
                     }
                     // Creating a fragment transaction
                     ft = fragmentManager.beginTransaction();
                     // Getting reference to the FragmentManager
-
                     // Adding a fragment to the fragment transaction
                     ft.replace(R.id.container, cFragment);
                     ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
@@ -186,14 +170,6 @@ public class NavActivity extends Activity
                 case 3:
                     mTitle = getString(R.string.title_section4);
                     SettingsFragment dFragment = new SettingsFragment();
-/*					// Creating a Bundle object
-					Bundle data = new Bundle();
-
-					// Setting the index of the currently selected item of mDrawerList
-					data.putInt("position", posit
-					// Setting the position to the fragment
-					rFragment.setArguments(data);*/
-
                     // Getting reference to the FragmentManager
                     if (fragmentManager.getBackStackEntryCount() > 0) {
                         fragmentManager.popBackStack();
@@ -227,6 +203,7 @@ public class NavActivity extends Activity
                 break;
             case 4:
                 mTitle = getString(R.string.title_section4);
+
                 break;
         }
     }
@@ -255,6 +232,7 @@ public class NavActivity extends Activity
             restoreActionBar();
             if (mTitle== getString(R.string.title_section1)){
                 getMenuInflater().inflate(R.menu.main,menu);
+
             }
             if (hidemenu){
                 if (menu.hasVisibleItems()) {
@@ -265,55 +243,17 @@ public class NavActivity extends Activity
         }
         return super.onCreateOptionsMenu(menu);
     }
-    public static void setlistfrag(Boolean enabled){
-        hidemenu = enabled;
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((NavActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }
-    }
     public void restoreActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
     }
+    public static void setlistfrag(Boolean enabled){
+        hidemenu = enabled;
+    }
+
+
     @Override
     public void onBackPressed() {
         if (fragmentManager.getBackStackEntryCount() > 0) {

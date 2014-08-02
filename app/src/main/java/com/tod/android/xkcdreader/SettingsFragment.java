@@ -9,14 +9,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,17 +25,17 @@ import java.util.Calendar;
  * Created by Margolin on 7/9/2014.
  */
 public class SettingsFragment extends PreferenceFragment {
-    int color;
-    public static final String BROADCAST = "com.tod.android.xkcdreader.android.action.broadcast";
-    boolean alarmUp;
     private SharedPreferences sharedPreferences;
-
+    boolean alarmUp;
+    public static final String BROADCAST = "com.tod.android.xkcdreader.android.action.broadcast";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.settings);
+        NavActivity.setlistfrag(true);
+        getActivity().invalidateOptionsMenu();
         CheckBoxPreference notifications = (CheckBoxPreference) findPreference("notifs");
         Preference prefereces=findPreference("about");
         Preference themeswitcheroo=findPreference("themepref");
@@ -125,7 +123,7 @@ public class SettingsFragment extends PreferenceFragment {
                     if (alarmUp){
                         PendingIntent.getBroadcast(getActivity(), 0,
                                 new Intent(BROADCAST),PendingIntent.FLAG_NO_CREATE).cancel();
-                        Log.d("alarm status", "stopped");
+                        Log.d("alarm status","stopped");
                     }
                     pm.setComponentEnabledSetting(receiver,
                             PackageManager.COMPONENT_ENABLED_STATE_DISABLED,

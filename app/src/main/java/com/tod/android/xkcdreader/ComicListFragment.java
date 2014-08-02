@@ -26,14 +26,14 @@ import java.util.ArrayList;
  * Created by Margolin on 7/22/2014.
  */
 public class ComicListFragment extends Fragment {
-    private ListView loadlist;
-    private Document whatifdoc;
-    private Async task;
-    private Elements articles;
-    private ProgressBar progress;
-    private Integer maxnum;
-    private ArrayList<String> d = new ArrayList<String>();
-    private ArrayList<String> e = new ArrayList<String>();
+     ListView loadlist;
+     Document whatifdoc;
+     Async task;
+     Elements articles;
+     ProgressBar progress;
+     Integer maxnum;
+     ArrayList<String> d = new ArrayList<String>();
+     ArrayList<String> e = new ArrayList<String>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class ComicListFragment extends Fragment {
         try {
             maxnum = bundle.getInt("maxnum");
         }catch (Exception e){
-            Log.d("maxnum error","no maxnum registered");
+            Log.d("maxnum error", "no maxnum registered");
         }
         getActivity().invalidateOptionsMenu();
         task = new Async();
@@ -100,7 +100,7 @@ public class ComicListFragment extends Fragment {
                     data.putString("LINK", e.get(position));
                     data.putString("TITLE", d.get(position));
                     if (maxnum != null){
-                    data.putInt("listmaxnum", maxnum);}
+                        data.putInt("listmaxnum", maxnum);}
                     // Setting the position to the fragment
                     iFragment.setArguments(data);
 
