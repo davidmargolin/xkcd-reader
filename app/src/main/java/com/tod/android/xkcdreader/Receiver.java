@@ -21,9 +21,9 @@ public class Receiver extends BroadcastReceiver {
         Intent intent = new Intent(context, NavActivity.class);
         PendingIntent pi = PendingIntent.getActivity(context, 7339684, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.hat)
+                .setSmallIcon(R.drawable.notifhat)
                 .setContentTitle("New xkcd available!")
-                .setContentText("It's that time of the week again...");
+                .setContentText("Click this notification to view it.");
         mBuilder.setContentIntent(pi);
         mBuilder.setDefaults(Notification.DEFAULT_SOUND);
         mBuilder.setAutoCancel(true);

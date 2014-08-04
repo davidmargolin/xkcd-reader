@@ -92,24 +92,21 @@ public class SettingsFragment extends PreferenceFragment {
                         moncalendar.set(Calendar.MINUTE, 0);
                         moncalendar.set(Calendar.SECOND,0);
                         moncalendar.set(Calendar.MILLISECOND,0);
-                        long firstTime = moncalendar.getTimeInMillis();
-                        Log.e("", "Monday firstTime: " + firstTime);
+
                         Calendar wedcalendar = Calendar.getInstance();
                         wedcalendar.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
                         wedcalendar.set(Calendar.HOUR_OF_DAY, 12);
                         wedcalendar.set(Calendar.MINUTE, 0);
                         wedcalendar.set(Calendar.SECOND,0);
                         wedcalendar.set(Calendar.MILLISECOND,0);
-                        long firstTimewed = wedcalendar.getTimeInMillis();
-                        Log.e("", "Wednesday firstTime: " + firstTimewed);
+
                         Calendar fricalendar = Calendar.getInstance();
                         fricalendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
                         fricalendar.set(Calendar.HOUR_OF_DAY, 12);
                         fricalendar.set(Calendar.MINUTE, 0);
                         fricalendar.set(Calendar.SECOND,0);
                         fricalendar.set(Calendar.MILLISECOND,0);
-                        long firstTimefri = fricalendar.getTimeInMillis();
-                        Log.e("", "Friday firstTime: " + firstTimefri);
+
                         if (moncalendar.before(today)) {
                             moncalendar.add(Calendar.DATE, 7);
                             Log.d("timemon","added 7 days");
@@ -123,6 +120,12 @@ public class SettingsFragment extends PreferenceFragment {
                             fricalendar.add(Calendar.DATE, 7);
                             Log.d("timefri","added 7 days");
                         }
+                        long firstTime = moncalendar.getTimeInMillis();
+                        Log.d("", "Monday firstTime: " + firstTime);
+                        long firstTimewed = wedcalendar.getTimeInMillis();
+                        Log.d("", "Wednesday firstTime: " + firstTimewed);
+                        long firstTimefri = fricalendar.getTimeInMillis();
+                        Log.d("", "Friday firstTime: " + firstTimefri);
                         alrm.setRepeating(AlarmManager.RTC_WAKEUP, moncalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, operation);
                         alrm1.setRepeating(AlarmManager.RTC_WAKEUP, wedcalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, operation1);
                         alrm2.setRepeating(AlarmManager.RTC_WAKEUP, fricalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, operation2);

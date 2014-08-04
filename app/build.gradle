@@ -8,8 +8,8 @@ android {
         applicationId "com.tod.android.xkcdreader"
         minSdkVersion 14
         targetSdkVersion 20
-        versionCode 8
-        versionName "2.0"
+        versionCode 9
+        versionName "2.0.1"
     }
     buildTypes {
         release {

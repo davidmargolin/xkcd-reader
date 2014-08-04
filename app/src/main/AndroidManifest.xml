@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"/>
     <application
         android:allowBackup="true"
-        android:icon="@drawable/hat"
+        android:icon="@drawable/nottealhat"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <receiver android:name=".Receiver">
