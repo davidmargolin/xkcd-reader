@@ -3,22 +3,17 @@ package com.tod.android.xkcdreader;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.analytics.tracking.android.EasyTracker;
@@ -33,7 +28,7 @@ public class NavActivity extends Activity
      static long back_pressed;
     FragmentManager fragmentManager;
     static final String BROADCAST = "com.tod.android.xkcdreader.android.action.broadcast";
-    static Boolean hidemenu;
+    static Boolean hidemenu=true;
         /**
          * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
          */
