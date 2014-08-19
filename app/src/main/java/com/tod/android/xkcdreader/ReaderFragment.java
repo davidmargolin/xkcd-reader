@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,32 +49,35 @@ import java.net.URL;
  * Created by Margolin on 7/2/2014.
  */
 public class ReaderFragment extends Fragment {
-    private String imagelink;
-    private String hypertext;
-    private String comictitle;
-    private Document subdepdoc;
-    private Button previousbutton;
-    private Button lastbutton;
-    private Button firstbutton;
-    private Boolean safetoshare = false;
-    private EditText selfselect;
-    private Button nextbutton;
-    private String website;
-    private ProgressBar progress;
-    private TextView titletext;
-    private Integer num = null;
-    private Integer maxnum;
-    private ColorDrawable back;
-    private Boolean lastattempt = true;
-    private Integer nextnum = 0;
-    private Integer prevnum = 0;
-    private Boolean failed = false;
-    private int color;
-    private Element comiclink;
-    private Element hyperlink;
-    private Async task;
-    private TouchImageView comic;
-private String link;
+    String imagelink;
+     String hypertext;
+     String comictitle;
+     Document subdepdoc;
+     Button previousbutton;
+     Button lastbutton;
+     Button firstbutton;
+     Boolean safetoshare = false;
+     EditText selfselect;
+     Button nextbutton;
+     String website;
+     ProgressBar progress;
+     TextView titletext;
+     Boolean gifthreadrunning = false;
+     Integer num = null;
+     Integer maxnum;
+     ColorDrawable back;
+     RelativeLayout root;
+     Boolean lastattempt = true;
+     Integer nextnum = 0;
+     Integer prevnum = 0;
+     Boolean failed = false;
+     int color;
+     Element comiclink;
+     Element hyperlink;
+     ShowGifView gifviewer;
+     Async task;
+     TouchImageView comic;
+ String link;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -126,6 +130,8 @@ private String link;
         firstbutton = (Button) v.findViewById(R.id.firstbutton);
         previousbutton = (Button) v.findViewById(R.id.previousbutton);
         progress = (ProgressBar) v.findViewById(R.id.progressBar);
+        root = (RelativeLayout) v.findViewById(R.id.addview);
+        //code to add gif image view to RelativeLayout -here created object to ShowGifView.class and pass the current object and url
         selfselect.setCursorVisible(false);
         selfselect.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -148,6 +154,7 @@ private String link;
                     }
                     website = "http://xkcd.com/" + selfselect.getText();
                     selfselect.setCursorVisible(false);
+                    lastattempt = false;
                     task = new Async();
                     task.execute();
 
@@ -170,8 +177,6 @@ private String link;
                     website = "http://xkcd.com/";
                     num = maxnum;
                     selfselect.setText(num.toString());
-                } else {
-                    website = "http://xkcd.com/";
                     lastattempt = true;
                 }
                 selfselect.setCursorVisible(false);
@@ -186,6 +191,7 @@ private String link;
                 website = "http://xkcd.com/1";
                 task = new Async();
                 num = 1;
+                lastattempt = false;
                 selfselect.setCursorVisible(false);
                 selfselect.setText(num.toString());
                 task.execute();
@@ -204,6 +210,7 @@ private String link;
                     num = prevnum;
                     website = "http://xkcd.com/" + num.toString();
                     task = new Async();
+                    lastattempt = false;
                     selfselect.setText(num.toString());
                     task.execute();
                 } else {
@@ -302,6 +309,7 @@ private String link;
             progress.setVisibility(View.VISIBLE);
             comic.setImageDrawable(back);
             safetoshare = false;
+            comic.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -310,35 +318,72 @@ private String link;
             comic.resetZoom();
             if (!failed) {
                 try {
-                    Picasso.with(getActivity().getApplicationContext())
-                            .load(imagelink)
-                            .error(R.drawable.error)
-                            .into(comic);
-                    selfselect.setText(num.toString());
-                        titletext.setText(comictitle);
-                    comic.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            AlertDialog.Builder popupBuilder = new AlertDialog.Builder(getActivity());
-                            TextView myMsg = new TextView(getActivity());
-                            myMsg.setText(hypertext);
-                            myMsg.setTextSize(18);
-                            myMsg.setBackgroundColor(color);
-                            if (color==getResources().getColor(R.color.White)) {
-                                myMsg.setTextColor(getResources().getColor(R.color.halfverygray));
-                            }else{
-                                myMsg.setTextColor(getResources().getColor(R.color.White));
-                            }
-                            myMsg.setPadding(16, 16, 16, 16);
-                            myMsg.setGravity(Gravity.CENTER_HORIZONTAL);
-                            popupBuilder.setView(myMsg);
-                            popupBuilder.create().show();
-                            return true;
+                    if (imagelink.contains(".gif")){
+                        if (gifthreadrunning) {
+                            gifviewer.stopthread();
                         }
-                    });
+                        gifviewer = new ShowGifView(getActivity(),imagelink);
+                        root.removeAllViewsInLayout();
+                        comic.setVisibility(View.GONE);
+                        root.setVisibility(View.VISIBLE);
+                        root.addView(gifviewer);
+                        gifthreadrunning = true;
+                        root.setOnLongClickListener(new View.OnLongClickListener() {
+                            @Override
+                            public boolean onLongClick(View v) {
+                                AlertDialog.Builder popupBuilder = new AlertDialog.Builder(getActivity());
+                                TextView myMsg = new TextView(getActivity());
+                                myMsg.setText(hypertext);
+                                myMsg.setTextSize(18);
+                                myMsg.setBackgroundColor(color);
+                                if (color == getResources().getColor(R.color.White)) {
+                                    myMsg.setTextColor(getResources().getColor(R.color.halfverygray));
+                                } else {
+                                    myMsg.setTextColor(getResources().getColor(R.color.White));
+                                }
+                                myMsg.setPadding(16, 16, 16, 16);
+                                myMsg.setGravity(Gravity.CENTER_HORIZONTAL);
+                                popupBuilder.setView(myMsg);
+                                popupBuilder.create().show();
+                                return true;
+                            }
+                        });
+
+                    }else{
+                        root.setVisibility(View.GONE);
+                        comic.setVisibility(View.VISIBLE);
+                        Picasso.with(getActivity().getApplicationContext())
+                                .load(imagelink)
+                                .error(R.drawable.error)
+                                .into(comic);
+
+                        comic.setOnLongClickListener(new View.OnLongClickListener() {
+                            @Override
+                            public boolean onLongClick(View v) {
+                                AlertDialog.Builder popupBuilder = new AlertDialog.Builder(getActivity());
+                                TextView myMsg = new TextView(getActivity());
+                                myMsg.setText(hypertext);
+                                myMsg.setTextSize(18);
+                                myMsg.setBackgroundColor(color);
+                                if (color == getResources().getColor(R.color.White)) {
+                                    myMsg.setTextColor(getResources().getColor(R.color.halfverygray));
+                                } else {
+                                    myMsg.setTextColor(getResources().getColor(R.color.White));
+                                }
+                                myMsg.setPadding(16, 16, 16, 16);
+                                myMsg.setGravity(Gravity.CENTER_HORIZONTAL);
+                                popupBuilder.setView(myMsg);
+                                popupBuilder.create().show();
+                                return true;
+                            }
+                        });}
+                    selfselect.setText(num.toString());
+                    titletext.setText(comictitle);
+
                     safetoshare = true;
                 } catch (NullPointerException e) {
                     Log.e("network failed", "no network access");
+                    e.printStackTrace();
                     failed = true;
 
                 }
@@ -374,7 +419,6 @@ private String link;
         task.cancel(true);
         super.onPause();
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 

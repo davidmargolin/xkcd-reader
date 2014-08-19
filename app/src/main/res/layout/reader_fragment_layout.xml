@@ -126,6 +126,19 @@
             android:layout_gravity="center"
  />
 </LinearLayout>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/addview"
+        android:layout_gravity="center"
+        android:background="?attr/imageback"
+        android:gravity="center"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/linearLayout4"
+        android:layout_below="@+id/linearLayout5">
+
+    </RelativeLayout>
     <com.tod.android.xkcdreader.TouchImageView
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
@@ -138,6 +151,7 @@
         android:background="?attr/imageback"
         android:layout_above="@+id/linearLayout4"
         android:layout_below="@+id/linearLayout5" />
+
 
     <ProgressBar
         android:layout_width="wrap_content"
