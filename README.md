@@ -5,9 +5,7 @@ Description: A simple xkcd reader for android.
   <img src="http://s13.postimg.org/to0p12ltj/graphic2.png"/>
 
 ## Download
-<a href="https://play.google.com/store/apps/details?id=com.tod.android.xkcdreader" alt="logo" title="Download from Google Play">
-  <img src="http://developer.android.com/images/brand/en_app_rgb_wo_60.png">
-</a>
+Removed from Play Store. No release currently available.
 
 ## Changelog
 #####V2.0
@@ -38,10 +36,6 @@ Description: A simple xkcd reader for android.
 - Explanation of notifications in settings
 - Light and Dark theme
 - Improved sharing related code
-
-## Acknowledgements
-
-Special thanks to all contributors.
 
 ## License
 
