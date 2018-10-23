@@ -5,7 +5,7 @@ Description: A simple xkcd reader for android.
   <img src="http://s13.postimg.org/to0p12ltj/graphic2.png"/>
 
 ## Download
-Removed from Play Store. No release currently available.
+No longer maintained.
 
 ## Changelog
 #####V2.0
